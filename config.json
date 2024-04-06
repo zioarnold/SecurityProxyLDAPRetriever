@@ -1,0 +1,11 @@
+{
+  "sourceCPE": "http://0.0.0.0:0/wsi/FNCEWS40MTOM/",
+  "sourceCPEObjectStore": "Storage",
+  "sourceCPEUsername": "UserName",
+  "sourceCPEPassword": "@$$w0rd",
+  "jaasStanzaName": "FileNetP8WSI",
+  "query": "SELECT * FROM [object_Class]",
+  "LDAPGroups": [
+    "COOKER/CN=COOKER,OU=KITCHEN,OU=Groups,DC=HOME,DC=ORG"
+  ]
+}
