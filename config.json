@@ -4,8 +4,16 @@
   "sourceCPEUsername": "UserName",
   "sourceCPEPassword": "@$$w0rd",
   "jaasStanzaName": "FileNetP8WSI",
-  "query": "SELECT * FROM [object_Class]",
+  "query": "SELECT * FROM [object_class]",
+  "phase":"1",
   "LDAPGroups": [
-    "COOKER/CN=COOKER,OU=KITCHEN,OU=Groups,DC=HOME,DC=ORG"
+    "COOKER;CN=COOKER,OU=KITCHEN,OU=Groups,DC=HOME,DC=ORG"
+  ],
+  "LDAPGroupToAdd": [
+    "CN=COOKER_SERCO,OU=KITCHEN,OU=Groups,DC=HOME,DC=ORG",
+    "CN=COOKER_NETCO,OU=KITCHEN,OU=Groups,DC=HOME,DC=ORG"
+  ],
+  "GroupLookup": [
+    "CN=COOKIES,OU=KITCHEN,OU=Groups,DC=HOME,DC=ORG"
   ]
 }
