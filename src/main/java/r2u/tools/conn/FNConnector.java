@@ -11,18 +11,28 @@ import r2u.tools.config.Configurator;
 import r2u.tools.worker.LDAPGroupRetriever;
 
 import javax.security.auth.Subject;
-import java.util.HashMap;
 
 public class FNConnector {
-    Configurator instance = Configurator.getInstance();
+    private final Configurator instance = Configurator.getInstance();
     private static final Logger logger = Logger.getLogger(FNConnector.class.getName());
 
     public FNConnector() {
     }
 
     public void initWork() {
-        LDAPGroupRetriever LDAPGroupRetriever = new LDAPGroupRetriever();
-        LDAPGroupRetriever.startWork(getObjectStoreSource(), instance.getQuery(), instance.getLdapGroups());
+        instance.setObjectStore(getObjectStoreSource());
+        switch (instance.getPhase()) {
+            case "1": {
+                LDAPGroupRetriever ldapGroupRetriever = new LDAPGroupRetriever();
+                ldapGroupRetriever.retrieveLDAPGroups(instance.getQuery(), instance.getLdapGroups());
+            }
+            break;
+            case "2": {
+                LDAPGroupRetriever ldapGroupRetriever = new LDAPGroupRetriever();
+                ldapGroupRetriever.assignNetCoServCoGroups(instance.getQuery());
+            }
+            break;
+        }
     }
 
     private ObjectStore getObjectStoreSource() {

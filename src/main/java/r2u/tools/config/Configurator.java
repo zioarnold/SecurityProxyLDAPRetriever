@@ -1,5 +1,8 @@
 package r2u.tools.config;
 
+import com.filenet.api.core.ObjectStore;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Configurator {
@@ -10,7 +13,11 @@ public class Configurator {
     private String sourceCPEPassword;
     private String jaasStanzaName;
     private String query;
+    private String phase;
     private HashMap<String, String> ldapGroups;
+    private ArrayList<String> ldapGroupToAdd;
+    private ObjectStore objectStore;
+    private ArrayList<String> groupLookup;
 
     private Configurator() {
 
@@ -77,5 +84,37 @@ public class Configurator {
 
     public void setLdapGroups(HashMap<String, String> ldapGroups) {
         this.ldapGroups = ldapGroups;
+    }
+
+    public String getPhase() {
+        return phase;
+    }
+
+    public void setPhase(String phase) {
+        this.phase = phase;
+    }
+
+    public ArrayList<String> getLdapGroupToAdd() {
+        return ldapGroupToAdd;
+    }
+
+    public void setLdapGroupToAdd(ArrayList<String> ldapGroupToAdd) {
+        this.ldapGroupToAdd = ldapGroupToAdd;
+    }
+
+    public ObjectStore getObjectStore() {
+        return objectStore;
+    }
+
+    public void setObjectStore(ObjectStore objectStore) {
+        this.objectStore = objectStore;
+    }
+
+    public void setGroupLookup(ArrayList<String> groupLookup) {
+        this.groupLookup = groupLookup;
+    }
+
+    public ArrayList<String> getGroupLookup() {
+        return groupLookup;
     }
 }

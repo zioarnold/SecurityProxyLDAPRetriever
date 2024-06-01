@@ -33,13 +33,20 @@ public class JSONParser {
                 sourceCPEUsername = jsonObject.getString("sourceCPEUsername"),
                 sourceCPEPassword = jsonObject.getString("sourceCPEPassword"),
                 jaasStanzaName = jsonObject.getString("jaasStanzaName"),
-                query = jsonObject.getString("query");
+                query = jsonObject.getString("query"),
+                phase = jsonObject.getString("phase");
 
         HashMap<String, String> ldapGroups = convertArrayList2HashMap(
                 listObject2ListString(
                         jsonObject.getJSONArray("LDAPGroups").toList()
                 )
         );
+
+        ArrayList<String> ldapGroupToAdd = listObject2ListString(
+                jsonObject.getJSONArray("LDAPGroupToAdd").toList()
+        );
+
+        ArrayList<String> groupLookup = listObject2ListString(jsonObject.getJSONArray("GroupLookup").toList());
 
         if (sourceCPE.isEmpty()) {
             logger.error("SourceCPE is empty. Aborting!");
@@ -61,11 +68,22 @@ public class JSONParser {
             logger.error("jaasStanzaName is empty. Aborting!");
             System.exit(-1);
         }
+        if (phase.isEmpty()) {
+            logger.error("phase is empty. Aborting!");
+            System.exit(-1);
+        }
         if (ldapGroups.isEmpty()) {
             logger.error("ldapGroups is empty. Aborting!");
             System.exit(-1);
         }
-
+        if (ldapGroupToAdd.isEmpty()) {
+            logger.error("ldapGroupToAdd is empty. Aborting!");
+            System.exit(-1);
+        }
+        if (groupLookup.size() != 1) {
+            logger.error("groupLookup is empty or there's more than one string. Aborting!");
+            System.exit(-1);
+        }
         Configurator instance = Configurator.getInstance();
         instance.setUriSource(sourceCPE);
         instance.setSourceCPEObjectStore(sourceCPEObjectStore);
@@ -74,6 +92,9 @@ public class JSONParser {
         instance.setJaasStanzaName(jaasStanzaName);
         instance.setQuery(query);
         instance.setLdapGroups(ldapGroups);
+        instance.setLdapGroupToAdd(ldapGroupToAdd);
+        instance.setGroupLookup(groupLookup);
+        instance.setPhase(phase);
         FNConnector fnConnector = new FNConnector();
         fnConnector.initWork();
     }
@@ -95,7 +116,7 @@ public class JSONParser {
     private static HashMap<String, String> convertArrayList2HashMap(ArrayList<String> ldapGroupsArrayList) {
         HashMap<String, String> ldapGroupHashMap = new HashMap<>();
         for (String ldap : ldapGroupsArrayList) {
-            ldapGroupHashMap.put(ldap.split("/")[1], ldap.split("/")[0]);
+            ldapGroupHashMap.put(ldap.split(";")[1], ldap.split(";")[0]);
         }
         return ldapGroupHashMap;
     }
